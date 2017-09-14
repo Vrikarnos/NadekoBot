@@ -25,7 +25,7 @@ namespace NadekoBot.Modules.Administration
         [NadekoCommand, Usage, Description, Aliases]
         [RequireContext(ContextType.Guild)]
         [RequireUserPermission(GuildPermission.Administrator)]
-        public async Task Embed([Remainder] string text)
+        public async Task Embed([Remainder] string embed)
         {
             //Embed modifiers include color, title, footer, image, thumb, author, time and description.
             var eb = new EmbedBuilder();
