@@ -25,6 +25,51 @@ namespace NadekoBot.Modules.Administration
         [NadekoCommand, Usage, Description, Aliases]
         [RequireContext(ContextType.Guild)]
         [RequireUserPermission(GuildPermission.Administrator)]
+        public async Task Embed([Remainder] string text)
+        {
+            //Embed modifiers include color, title, footer, image, thumb, author, time and description.
+            var eb = new EmbedBuilder();
+            /*if(text.Contains("{color=")){
+                int startIndex = embed.IndexOf("{color=")+"{color=".Length;
+                int endIndex = embed.IndexOf("}", startIndex);
+                eb.withColor(embed.Substring(startIndex, endIndex-startIndex);
+            }*/
+            if(text.Contains("{title=")){
+                int startIndex = embed.IndexOf("{title=")+"{title=".Length;
+                int endIndex = embed.IndexOf("}", startIndex);
+                eb.withTitle(embed.Substring(startIndex, endIndex-startIndex));
+            }
+            if(text.Contains("{footer=")){
+                int startIndex = embed.IndexOf("{footer=")+"{footer=".Length;
+                int endIndex = embed.IndexOf("}", startIndex);
+                eb.WithFooter(embed.Substring(startIndex, endIndex-startIndex));
+            }
+            if(text.Contains("{image=")){
+                int startIndex = embed.IndexOf("{image=")+"{image=".Length;
+                int endIndex = embed.IndexOf("}", startIndex);
+                eb.WithImageUrl(embed.Substring(startIndex, endIndex-startIndex));
+            }
+            if(text.Contains("{thumb=")){
+                int startIndex = embed.IndexOf("{thumb=")+"{thumb=".Length;
+                int endIndex = embed.IndexOf("}", startIndex);
+                eb.WithThumbnailUrl(embed.Substring(startIndex, endIndex-startIndex));
+            }
+            if(text.Contains("{author=")){
+                int startIndex = embed.IndexOf("{author=")+"{author=".Length;
+                int endIndex = embed.IndexOf("}", startIndex);
+                eb.WithAuthor(embed.Substring(startIndex, endIndex-startIndex));
+            }
+            if(text.Contains("{description=")){
+                int startIndex = embed.IndexOf("{description=")+"{description=".Length;
+                int endIndex = embed.IndexOf("}", startIndex);
+                eb.WithDescription(embed.Substring(startIndex, endIndex-startIndex));
+            }
+            await Context.Channel.SendMessageAsync("", false, eb.Build());
+        }
+
+        [NadekoCommand, Usage, Description, Aliases]
+        [RequireContext(ContextType.Guild)]
+        [RequireUserPermission(GuildPermission.Administrator)]
         [RequireBotPermission(GuildPermission.ManageMessages)]
         public async Task Delmsgoncmd()
         {
@@ -312,7 +357,7 @@ namespace NadekoBot.Modules.Administration
         [RequireUserPermission(GuildPermission.MentionEveryone)]
         public async Task MentionRole(params IRole[] roles)
         {
-            string send = "❕" +GetText("menrole",Context.User.Mention);
+            string send = "â•" +GetText("menrole",Context.User.Mention);
             foreach (var role in roles)
             {
                 send += $"\n**{role.Name}**\n";
@@ -341,7 +386,7 @@ namespace NadekoBot.Modules.Administration
             {
                 donatorsOrdered = uow.Donators.GetDonatorsOrdered();
             }
-            await Context.Channel.SendConfirmAsync(GetText("donators"), string.Join("⭐", donatorsOrdered.Select(d => d.Name))).ConfigureAwait(false);
+            await Context.Channel.SendConfirmAsync(GetText("donators"), string.Join("â­", donatorsOrdered.Select(d => d.Name))).ConfigureAwait(false);
 
             _nadekoSupportServer = _nadekoSupportServer ?? (await Context.Client.GetGuildAsync(117523346618318850));
 
@@ -350,7 +395,7 @@ namespace NadekoBot.Modules.Administration
                 return;
 
             var usrs = (await _nadekoSupportServer.GetUsersAsync()).Where(u => u.RoleIds.Contains(236667642088259585u));
-            await Context.Channel.SendConfirmAsync("Patreon supporters", string.Join("⭐", usrs.Select(d => d.Username))).ConfigureAwait(false);
+            await Context.Channel.SendConfirmAsync("Patreon supporters", string.Join("â­", usrs.Select(d => d.Username))).ConfigureAwait(false);
         }
 
 
